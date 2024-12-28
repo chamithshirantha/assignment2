@@ -79,8 +79,18 @@ const addProduct = async (req, res) => {
         const newProduct = new productModel(productData);
         const product = await newProduct.save();
 
-        res.json({success: true, product});
+        res.json({success: true, message: "Product Added !"});
     } catch (error) {
+        res.json({success: false, message: error.message});
+    }
+}
+
+const allProduct = async (req, res) => {
+    try {
+        const allProduct = await productModel.find({active: true});
+        res.json({success:true, allProduct});
+    } catch (error) {
+        console.log(error);
         res.json({success: false, message: error.message});
     }
 }
@@ -150,5 +160,6 @@ export {
     addProduct, 
     getProduct,
     updateProduct,
-    deleteProduct
+    deleteProduct,
+    allProduct
 }
